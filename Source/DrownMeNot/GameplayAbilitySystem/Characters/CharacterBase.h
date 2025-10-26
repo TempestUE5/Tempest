@@ -35,6 +35,9 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
     USoundBase* SpawnSound;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh")
+    UStaticMeshComponent* HurricaneOrbMeshComponent;
+
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySystem")
     EGameplayEffectReplicationMode AscReplicationMode = EGameplayEffectReplicationMode::Mixed;
@@ -47,7 +50,7 @@ protected:
 
     virtual void OnRep_PlayerState() override;
 
-public:	
+public:
     // Called every frame
     virtual void Tick(float DeltaTime) override;
 

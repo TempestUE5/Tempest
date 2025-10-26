@@ -40,6 +40,20 @@ ACharacterBase::ACharacterBase()
     GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
     GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
     GetCharacterMovement()->BrakingDecelerationFalling = 1500.f;
+
+    FAttachmentTransformRules AttachmentRules(EAttachmentRule::KeepRelative, true);
+    HurricaneOrbMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HurricaneOrbMeshComponent"));
+    HurricaneOrbMeshComponent->AttachToComponent(GetMesh(), AttachmentRules, FName("HurricaneOrbSocket_R"));
+    HurricaneOrbMeshComponent->SetMobility(EComponentMobility::Movable);
+
+    UStaticMesh* HurricaneOrbMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Weapons/HurricaneOrb/SM_HurricaneOrb.SM_HurricaneOrb"));
+
+
+    if (HurricaneOrbMesh) {
+        HurricaneOrbMeshComponent->SetStaticMesh(HurricaneOrbMesh);
+    }
+
+    HurricaneOrbMeshComponent->SetVisibility(false);
 }
 
 // Called when the game starts or when spawned
