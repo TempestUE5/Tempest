@@ -95,9 +95,14 @@ void AWaveManager::SpawnEnemiesForWave(int EnemyCount)
 			EnemyCountThisWave++;
 			int EnemyClassIndex = FMath::RandRange(0, EnemyClassPool.Num() - 1);
 			TSubclassOf<ACharacterBase> EnemyClass = EnemyClassPool[EnemyClassIndex];
-			ACharacterBase* NewEnemy = GetWorld()->SpawnActor<ACharacterBase>(EnemyClass, SpawnLocation, FRotator::ZeroRotator);
-			NewEnemy->OnDeath.AddDynamic(this, &AWaveManager::OnCharacterDied);
 
+			ACharacterBase* NewEnemy;
+            do {
+				NewEnemy = GetWorld()->SpawnActor<ACharacterBase>(EnemyClass, SpawnLocation, FRotator::ZeroRotator);
+                SpawnLocation += FVector(100.f, 0.f, 0.f);
+            } while (NewEnemy == nullptr);
+			
+			NewEnemy->OnDeath.AddDynamic(this, &AWaveManager::OnCharacterDied);
 		}
 	}
 }

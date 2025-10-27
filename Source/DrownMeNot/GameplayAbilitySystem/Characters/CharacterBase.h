@@ -15,40 +15,50 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathDelegate);
 UCLASS()
 class DROWNMENOT_API ACharacterBase : public ACharacter, public IAbilitySystemInterface
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	ACharacterBase();
+    // Sets default values for this character's properties
+    ACharacterBase();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
-	UAbilitySystemComponent* AbilitySystemComponent;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
+    UAbilitySystemComponent* AbilitySystemComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
-	class UBasicAttributeSet* BasicAttributeSet;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
+    class UBasicAttributeSet* BasicAttributeSet;
+
+    // The actual component in the scene
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    UAudioComponent* SpawnAudioComponent;
+
+    // The sound to assign in editor
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+    USoundBase* SpawnSound;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh")
+    UStaticMeshComponent* HurricaneOrbMeshComponent;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySystem")
-	EGameplayEffectReplicationMode AscReplicationMode = EGameplayEffectReplicationMode::Mixed;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilitySystem")
+    EGameplayEffectReplicationMode AscReplicationMode = EGameplayEffectReplicationMode::Mixed;
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+    // Called when the game starts or when spawned
+    virtual void BeginPlay() override;
 
-	virtual void PossessedBy(AController* NewController) override;
+    virtual void PossessedBy(AController* NewController) override;
 
-	virtual void OnRep_PlayerState() override;
+    virtual void OnRep_PlayerState() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+public:
+    // Called every frame
+    virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    // Called to bind functionality to input
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+    virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	UPROPERTY(BlueprintAssignable, Category = "Events")
-	FDeathDelegate OnDeath;
-
+    UPROPERTY(BlueprintAssignable, Category = "Events")
+    FDeathDelegate OnDeath;
 };
