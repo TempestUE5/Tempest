@@ -47,22 +47,26 @@ void AHurricane::Tick(float DeltaTime)
     }
 }
 
-void AHurricane::PredictHurricaneTrajectory(FVector Start, FVector Target, FVector StartDir, float TimeStep)
+FVector AHurricane::PredictHurricaneTrajectory(FVector Start, FVector Target, FVector StartDir, float TimeStep)
 {
     FVector CurrentPos = Start;
 
-    for (float Time = 0.f; Time <= AnimationDuration; Time += TimeStep)
+    for (float Time = 0.f; Time < AnimationDuration; Time += TimeStep)
     {
         FVector Velocity = ComputeHurricaneVelocityAtTime(Start, Target, StartDir, Time);
+
         FVector NextPos = CurrentPos + Velocity * TimeStep;
 
-        DrawDebugLine(GetWorld(), CurrentPos, NextPos, FColor::White, false, 0.f, 0, 2.f);
-        DrawDebugDirectionalArrow(GetWorld(), CurrentPos, CurrentPos + Velocity * 0.2f, 40.f, FColor::Cyan, false, 0.f, 0, 1.f);
+
+        //DrawDebugLine(GetWorld(), CurrentPos, NextPos, FColor::White, false, 0.01f, 0, 1.f);
+        DrawDebugDirectionalArrow(GetWorld(), CurrentPos, CurrentPos + Velocity * 0.001f, 30.f, FColor::Emerald, false, 0.01f, 0, 2.f);
 
         CurrentPos = NextPos;
     }
 
     CurrentTrajectory = { Start, Target, StartDir, TimeStep };
+
+    return CurrentPos;
 }
 
 void AHurricane::TriggerLaunchHurricane()
@@ -98,23 +102,57 @@ void AHurricane::SetIsActive(bool a) {
     }
 }
 
+//FVector AHurricane::ComputeHurricaneVelocityAtTime(FVector Start, FVector Target, FVector StartDir, float t)
+//{
+//    // Normalize time
+//    float alpha = FMath::Clamp(t / AnimationDuration, 0.f, 1.f);
+//
+//    // Flatten directions to the XZ plane
+//    FVector FlatStartDir = StartDir.GetSafeNormal2D();
+//    FVector FlatToTarget = (Target - Start).GetSafeNormal2D();
+//
+//    // Slerp between start and target directions for smooth curvature
+//    FVector CurvedDir = FMath::Lerp(FlatStartDir, FlatToTarget, alpha).GetSafeNormal();
+//
+//    // Compute constant speed to reach target in time
+//    float TotalDistance = FVector::Dist2D(Start, Target);
+//    float Speed = TotalDistance / AnimationDuration;
+//
+//    // Final velocity
+//    FVector Velocity = CurvedDir * Speed;
+//    return Velocity;
+//}
+
 FVector AHurricane::ComputeHurricaneVelocityAtTime(FVector Start, FVector Target, FVector StartDir, float t)
 {
-    // Normalize time
-    float alpha = FMath::Clamp(t / AnimationDuration, 0.f, 1.f);
+   // Normalize time
+    t = FMath::Clamp(t / AnimationDuration, 0.f, 1.f);
 
-    // Flatten directions to the XZ plane
-    FVector FlatStartDir = StartDir.GetSafeNormal2D();
-    FVector FlatToTarget = (Target - Start).GetSafeNormal2D();
+    // Zero out Z so the path stays flat
+    FVector FlatStart = FVector(Start.X, Start.Y, 0.f);
+    FVector FlatTarget = FVector(Target.X, Target.Y, 0.f);
+    FVector FlatStartDir = FVector(StartDir.X, StartDir.Y, 0.f).GetSafeNormal();
 
-    // Slerp between start and target directions for smooth curvature
-    FVector CurvedDir = FMath::Lerp(FlatStartDir, FlatToTarget, alpha).GetSafeNormal();
+    // Define tangents (scaled by distance for smoother shape)
+    float Distance = FVector::Dist(FlatStart, FlatTarget);
+    FVector StartTangent = FlatStartDir * Distance * 0.5f;
 
-    // Compute constant speed to reach target in time
-    float TotalDistance = FVector::Dist2D(Start, Target);
-    float Speed = TotalDistance / AnimationDuration;
+    FVector EndDir = (FlatTarget - FlatStart).GetSafeNormal();
+    FVector EndTangent = EndDir * Distance * 0.5f;
 
-    // Final velocity
-    FVector Velocity = CurvedDir * Speed;
-    return Velocity;
+    // Hermite basis function derivatives (for velocity)
+    float h1 = 6 * t * t - 6 * t;
+    float h2 = 3 * t * t - 4 * t + 1;
+    float h3 = -6 * t * t + 6 * t;
+    float h4 = 3 * t * t - 2 * t;
+
+    // Combine in XY only
+    FVector VelocityXY =
+        h1 * FlatStart +
+        h2 * StartTangent +
+        h3 * FlatTarget +
+        h4 * EndTangent;
+
+    // Return velocity with zero Z
+    return FVector(VelocityXY.X, VelocityXY.Y, 0.f);
 }

@@ -31,7 +31,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = "HurricaneBehavior")
-	void PredictHurricaneTrajectory(FVector Start, FVector Target, FVector StartDir, float TimeStep = 0.25);
+	FVector PredictHurricaneTrajectory(FVector Start, FVector Target, FVector StartDir, float TimeStep = 0.25);
 
 	UFUNCTION(BlueprintCallable, Category = "HurricaneBehavior")
 	void TriggerLaunchHurricane();
