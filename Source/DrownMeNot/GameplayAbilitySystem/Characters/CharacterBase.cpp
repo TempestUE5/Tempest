@@ -41,13 +41,11 @@ ACharacterBase::ACharacterBase()
     GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
     GetCharacterMovement()->BrakingDecelerationFalling = 1500.f;
 
-    FAttachmentTransformRules AttachmentRules(EAttachmentRule::KeepRelative, true);
     HurricaneOrbMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HurricaneOrbMeshComponent"));
-    HurricaneOrbMeshComponent->AttachToComponent(GetMesh(), AttachmentRules, FName("HurricaneOrbSocket_R"));
+
     HurricaneOrbMeshComponent->SetMobility(EComponentMobility::Movable);
 
     UStaticMesh* HurricaneOrbMesh = LoadObject<UStaticMesh>(nullptr, TEXT("/Game/Weapons/HurricaneOrb/SM_HurricaneOrb.SM_HurricaneOrb"));
-
 
     if (HurricaneOrbMesh) {
         HurricaneOrbMeshComponent->SetStaticMesh(HurricaneOrbMesh);
@@ -65,6 +63,9 @@ void ACharacterBase::BeginPlay()
         SpawnAudioComponent->SetSound(SpawnSound);
         SpawnAudioComponent->Play();
     }
+
+    FAttachmentTransformRules AttachmentRules(EAttachmentRule::KeepRelative, true);
+    HurricaneOrbMeshComponent->AttachToComponent(GetMesh(), AttachmentRules, FName("HurricaneOrbSocket_R"));
 }
 
 void ACharacterBase::PossessedBy(AController* NewController)
