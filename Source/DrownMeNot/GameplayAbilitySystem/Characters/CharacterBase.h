@@ -7,10 +7,10 @@
 #include "AbilitySystemInterface.h"
 #include "AbilitySystemComponent.h"
 #include "Delegates/DelegateCombinations.h"
+#include "NiagaraSystem.h"
 #include "CharacterBase.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathDelegate);
-
 
 UCLASS()
 class DROWNMENOT_API ACharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -27,13 +27,11 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
     class UBasicAttributeSet* BasicAttributeSet;
 
-    // The actual component in the scene
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
-    UAudioComponent* SpawnAudioComponent;
-
-    // The sound to assign in editor
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
     USoundBase* SpawnSound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
+	UNiagaraSystem* SpawnEffect;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh")
     UStaticMeshComponent* HurricaneOrbMeshComponent;

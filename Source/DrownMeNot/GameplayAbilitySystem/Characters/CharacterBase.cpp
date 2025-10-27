@@ -4,7 +4,9 @@
 #include "CharacterBase.h"
 
 #include "Components/CapsuleComponent.h"
-#include "Components/AudioComponent.h"
+
+#include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
 
 #include "DrownMeNot/EnhancedInputAbilitySystem.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -19,9 +21,6 @@ ACharacterBase::ACharacterBase()
     AbilitySystemComponent = CreateDefaultSubobject<UEnhancedInputAbilitySystem>(TEXT("AbilitySystemComponent"));
     AbilitySystemComponent->SetIsReplicated(true);
     AbilitySystemComponent->SetReplicationMode(AscReplicationMode);
-
-    SpawnAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SpawnAudioComponent"));
-    SpawnAudioComponent->SetupAttachment(RootComponent);
 
     BasicAttributeSet = CreateDefaultSubobject<UBasicAttributeSet>(TEXT("BasicAttributeSet"));
 
@@ -59,9 +58,19 @@ void ACharacterBase::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (SpawnSound && SpawnAudioComponent) {
-        SpawnAudioComponent->SetSound(SpawnSound);
-        SpawnAudioComponent->Play();
+    if (!IsPlayerControlled()) {
+        if (SpawnSound) {
+            UGameplayStatics::PlaySoundAtLocation(this, SpawnSound, GetActorLocation());
+        }
+
+        if (SpawnEffect) {
+            UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+                GetWorld(),
+                SpawnEffect,
+                GetActorLocation(),
+                GetActorRotation()
+            );
+        }
     }
 
     FAttachmentTransformRules AttachmentRules(EAttachmentRule::KeepRelative, true);

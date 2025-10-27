@@ -59,7 +59,12 @@ void AWaveManager::StartNextWave()
 
 void AWaveManager::StartNextProceduralWave(int EnemyCount)
 {
-	SpawnEnemiesForWave(EnemyCount);
+	if (TotalWaveCount == 0 || CurrentWave <= TotalWaveCount) {
+ 		SpawnEnemiesForWave(EnemyCount);
+	}
+	else {
+		ProcessWin();
+	}
 }
 
 void AWaveManager::StartNextEasyWavePreset(int WaveNumber)
@@ -76,7 +81,17 @@ void AWaveManager::StartNextEasyWavePreset(int WaveNumber)
 		SpawnEnemiesForWave(5);
 		break;
 	case 4:
+		SpawnEnemiesForWave(7);
+		break;
+	case 5:
+		SpawnEnemiesForWave(10);
+		break;
+	case 6:
+		SpawnEnemiesForWave(15);
+		break;
+	case 7:
 		ProcessWin();
+		break;
 	default:
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("No preset defined for wave %d"), WaveNumber));
 	}
