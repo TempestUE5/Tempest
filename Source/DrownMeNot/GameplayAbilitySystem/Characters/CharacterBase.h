@@ -59,4 +59,6 @@ public:
 
     UPROPERTY(BlueprintAssignable, Category = "Events")
     FDeathDelegate OnDeath;
+
+	void RestoreHealthToFull();
 };

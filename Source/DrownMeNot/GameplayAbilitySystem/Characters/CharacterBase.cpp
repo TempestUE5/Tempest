@@ -112,3 +112,10 @@ UAbilitySystemComponent* ACharacterBase::GetAbilitySystemComponent() const
     return AbilitySystemComponent;
 }
 
+void ACharacterBase::RestoreHealthToFull() {
+	if (BasicAttributeSet) {
+		float MaxHealth = BasicAttributeSet->GetMaxHealth();
+		BasicAttributeSet->SetHealth(MaxHealth);
+	}
+}
+

@@ -2,6 +2,7 @@
 
 
 #include "WaveManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AWaveManager::AWaveManager()
@@ -44,6 +45,14 @@ void AWaveManager::Tick(float DeltaTime)
 
 void AWaveManager::StartNextWave()
 {
+	//restore player health to full
+	//get player character
+	ACharacterBase* PlayerCharacter = Cast<ACharacterBase>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	//get player attribute set
+	if (PlayerCharacter) {
+		PlayerCharacter->RestoreHealthToFull();
+	}
+
 	CurrentWave++;
 	switch (OverallWaveType)
 	{
