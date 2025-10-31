@@ -23,6 +23,11 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
 	int32, CurrentWaveNumber
 );
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnWaveCompleted,
+	int32, WaveStarting
+);
+
 UCLASS()
 class DROWNMENOT_API AWaveManager : public AActor
 {
@@ -71,6 +76,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Wave")
 	FOnWaveInfoChanged OnWaveInfoChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "Wave")
+	FOnWaveCompleted OnWaveCompleted;
 
 	UFUNCTION(BlueprintCallable, Category = "Wave")
 	void GetCurrentWaveInfo(int32& OutCurrentEnemyCount, int32& OutTotalWaveEnemyCount, int32& OutCurrentWaveNumber) const

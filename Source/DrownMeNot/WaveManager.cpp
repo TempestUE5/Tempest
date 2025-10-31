@@ -63,6 +63,7 @@ void AWaveManager::StartNextWave()
 		StartNextEasyWavePreset(CurrentWave);
 		break;
 	}
+	OnWaveCompleted.Broadcast(CurrentWave);
 	OnWaveInfoChanged.Broadcast(EnemyCountThisWave - NumEnemiesKilledThisWave, EnemyCountThisWave, CurrentWave);
 }
 
