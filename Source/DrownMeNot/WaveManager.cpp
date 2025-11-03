@@ -45,14 +45,6 @@ void AWaveManager::Tick(float DeltaTime)
 
 void AWaveManager::StartNextWave()
 {
-	//restore player health to full
-	//get player character
-	ACharacterBase* PlayerCharacter = Cast<ACharacterBase>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	//get player attribute set
-	if (PlayerCharacter) {
-		PlayerCharacter->RestoreHealthToFull();
-	}
-
 	CurrentWave++;
 	switch (OverallWaveType)
 	{
@@ -63,6 +55,7 @@ void AWaveManager::StartNextWave()
 		StartNextEasyWavePreset(CurrentWave);
 		break;
 	}
+	OnWaveCompleted.Broadcast(CurrentWave);
 	OnWaveInfoChanged.Broadcast(EnemyCountThisWave - NumEnemiesKilledThisWave, EnemyCountThisWave, CurrentWave);
 }
 

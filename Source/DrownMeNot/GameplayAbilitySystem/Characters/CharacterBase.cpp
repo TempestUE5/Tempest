@@ -119,3 +119,19 @@ void ACharacterBase::RestoreHealthToFull() {
 	}
 }
 
+void ACharacterBase::RestoreManaToFull()
+{
+	if (BasicAttributeSet) {
+		float MaxMana = BasicAttributeSet->GetMaxMana();
+		BasicAttributeSet->SetMana(MaxMana);
+	}
+}
+
+void ACharacterBase::IncreaseMaxMana(float Amount)
+{
+	if (BasicAttributeSet) {
+		float CurrentMaxMana = BasicAttributeSet->GetMaxMana();
+		BasicAttributeSet->SetMaxMana(CurrentMaxMana + Amount);
+	}
+}
+

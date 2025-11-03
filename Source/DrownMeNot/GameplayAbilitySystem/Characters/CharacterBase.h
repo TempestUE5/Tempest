@@ -60,5 +60,12 @@ public:
     UPROPERTY(BlueprintAssignable, Category = "Events")
     FDeathDelegate OnDeath;
 
+    UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void RestoreHealthToFull();
+
+	UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void RestoreManaToFull();
+
+    UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+	void IncreaseMaxMana(float Amount);
 };
