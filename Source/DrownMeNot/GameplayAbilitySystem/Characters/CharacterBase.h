@@ -68,4 +68,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
 	void IncreaseMaxMana(float Amount);
+
+    UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
+    void SetMaxHealth(float NewMaxHealth);
 };

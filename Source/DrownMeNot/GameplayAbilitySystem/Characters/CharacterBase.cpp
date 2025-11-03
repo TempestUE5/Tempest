@@ -135,3 +135,10 @@ void ACharacterBase::IncreaseMaxMana(float Amount)
 	}
 }
 
+void ACharacterBase::SetMaxHealth(float NewMaxHealth)
+{
+	if (BasicAttributeSet) {
+		BasicAttributeSet->SetMaxHealth(NewMaxHealth);
+	}
+}
+

@@ -36,16 +36,14 @@ class DROWNMENOT_API AWaveManager : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AWaveManager();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave Characteristics")
-	int TotalWaveCount;
 	
 	// List of classes an enemy can be spawned from
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave Characteristics")
 	TArray<TSubclassOf<ACharacterBase>> EnemyClassPool;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave Characteristics")
-	EOverallWaveType OverallWaveType;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave Characteristics")
+	//should make a uproperty when functionality is present for different wave presets
+	EOverallWaveType OverallWaveType{ EOverallWaveType::EasyWavePreset };
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USceneComponent* RootComp;
@@ -92,7 +90,7 @@ private:
 	void StartNextProceduralWave(int EnemyCount);
 	void StartNextEasyWavePreset(int WaveNumber);
 
-	void SpawnEnemiesForWave(int EnemyCount);
+	void SpawnEnemiesForWave(int EnemyCount, bool isBossWave = false);
 
 	void ProcessWaveEnd();
 

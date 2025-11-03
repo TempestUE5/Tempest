@@ -61,12 +61,13 @@ void AWaveManager::StartNextWave()
 
 void AWaveManager::StartNextProceduralWave(int EnemyCount)
 {
-	if (TotalWaveCount == 0 || CurrentWave <= TotalWaveCount) {
- 		SpawnEnemiesForWave(EnemyCount);
-	}
-	else {
-		ProcessWin();
-	}
+	// should change this to track some desired end point or go forever?
+	//if (xx) {
+ 	SpawnEnemiesForWave(EnemyCount);
+	//}
+	//else {
+	//	ProcessWin();
+	//}
 }
 
 void AWaveManager::StartNextEasyWavePreset(int WaveNumber)
@@ -83,13 +84,13 @@ void AWaveManager::StartNextEasyWavePreset(int WaveNumber)
 		SpawnEnemiesForWave(5);
 		break;
 	case 4:
-		SpawnEnemiesForWave(7);
+		SpawnEnemiesForWave(1, true);
 		break;
 	case 5:
-		SpawnEnemiesForWave(10);
+		SpawnEnemiesForWave(7);
 		break;
 	case 6:
-		SpawnEnemiesForWave(15);
+		SpawnEnemiesForWave(5, true);
 		break;
 	case 7:
 		ProcessWin();
@@ -99,8 +100,25 @@ void AWaveManager::StartNextEasyWavePreset(int WaveNumber)
 	}
 }
 
-void AWaveManager::SpawnEnemiesForWave(int EnemyCount)
+void AWaveManager::SpawnEnemiesForWave(int EnemyCount, bool isBossWave)
 {
+	if (EnemyCount == 1) {
+		int EnemyClassIndex = 0;
+		if (isBossWave) {
+			EnemyClassIndex = 2;
+		}
+
+		EnemyCountThisWave = 1;
+		int SpawnPointIndex = FMath::RandRange(0, SpawnPointLocations.Num() - 1);
+		FVector SpawnLocation = SpawnPointLocations[SpawnPointIndex];
+		TSubclassOf<ACharacterBase> EnemyClass = EnemyClassPool[EnemyClassIndex];
+
+		ACharacterBase* NewEnemy = GetWorld()->SpawnActor<ACharacterBase>(EnemyClass, SpawnLocation, FRotator::ZeroRotator);
+
+		NewEnemy->OnDeath.AddDynamic(this, &AWaveManager::OnCharacterDied);
+		return;
+	}
+
 	for (int i = 0; i < EnemyCount; i++)
 	{
 		int SpawnPointIndex = FMath::RandRange(0, SpawnPointLocations.Num() - 1);
@@ -110,7 +128,8 @@ void AWaveManager::SpawnEnemiesForWave(int EnemyCount)
 		if (EnemyClassPool.Num() > 0)
 		{
 			EnemyCountThisWave++;
-			int EnemyClassIndex = FMath::RandRange(0, EnemyClassPool.Num() - 1);
+			//discount boss from non boss waves
+			int EnemyClassIndex = FMath::RandRange(0, EnemyClassPool.Num() - (isBossWave ? 1 : 2));
 			TSubclassOf<ACharacterBase> EnemyClass = EnemyClassPool[EnemyClassIndex];
 
 			ACharacterBase* NewEnemy;
@@ -140,9 +159,7 @@ void AWaveManager::ProcessWaveEnd()
 	NumEnemiesKilledThisWave = 0;
 	EnemyCountThisWave = 0;
 
-	if (CurrentWave < TotalWaveCount) {
-		StartNextWave();
-	}
+	StartNextWave();
 }
 
 void AWaveManager::ProcessWin()
