@@ -8,7 +8,7 @@
 AWaveManager::AWaveManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = RootComp;
@@ -46,6 +46,7 @@ void AWaveManager::Tick(float DeltaTime)
 void AWaveManager::StartNextWave()
 {
 	CurrentWave++;
+
 	switch (OverallWaveType)
 	{
 	case EOverallWaveType::ProcedurallyGenerated:
@@ -55,6 +56,7 @@ void AWaveManager::StartNextWave()
 		StartNextEasyWavePreset(CurrentWave);
 		break;
 	}
+
 	OnWaveCompleted.Broadcast(CurrentWave);
 	OnWaveInfoChanged.Broadcast(EnemyCountThisWave - NumEnemiesKilledThisWave, EnemyCountThisWave, CurrentWave);
 }
