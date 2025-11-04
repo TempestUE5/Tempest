@@ -60,7 +60,7 @@ void ACharacterBase::BeginPlay()
 
     if (!IsPlayerControlled()) {
         if (SpawnSound) {
-            UGameplayStatics::PlaySoundAtLocation(this, SpawnSound, GetActorLocation(), 2.f);
+            UGameplayStatics::PlaySoundAtLocation(this, SpawnSound, GetActorLocation(), 1.f);
         }
 
         if (SpawnEffect) {
