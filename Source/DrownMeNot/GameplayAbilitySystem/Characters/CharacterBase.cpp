@@ -4,6 +4,7 @@
 #include "CharacterBase.h"
 
 #include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
 
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
