@@ -30,6 +30,9 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
     USoundBase* SpawnSound;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio")
+    UAudioComponent* SpawnAudioComponent;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effects")
 	UNiagaraSystem* SpawnEffect;
 
@@ -71,4 +74,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "AbilitySystem")
     void SetMaxHealth(float NewMaxHealth);
+
+private:
+    FTimerHandle m_AudioStopTimerHandle;
 };
