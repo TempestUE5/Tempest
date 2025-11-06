@@ -4,6 +4,7 @@
 #include "CharacterBase.h"
 
 #include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
 
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
@@ -40,6 +41,9 @@ ACharacterBase::ACharacterBase()
     GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
     GetCharacterMovement()->BrakingDecelerationFalling = 1500.f;
 
+    SpawnAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SpawnAudioComponent"));
+    SpawnAudioComponent->SetupAttachment(RootComponent);
+
     HurricaneOrbMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HurricaneOrbMeshComponent"));
 
     HurricaneOrbMeshComponent->SetMobility(EComponentMobility::Movable);
@@ -59,8 +63,17 @@ void ACharacterBase::BeginPlay()
     Super::BeginPlay();
 
     if (!IsPlayerControlled()) {
-        if (SpawnSound) {
-            UGameplayStatics::PlaySoundAtLocation(this, SpawnSound, GetActorLocation(), 1.f);
+        if (SpawnSound && SpawnAudioComponent) {
+            SpawnAudioComponent->SetSound(SpawnSound);
+            SpawnAudioComponent->Play();
+
+            GetWorldTimerManager().SetTimer(
+                m_AudioStopTimerHandle,
+                SpawnAudioComponent,
+                &UAudioComponent::Stop,
+                2, // duration (seconds)
+                false // should not loop
+            );
         }
 
         if (SpawnEffect) {
