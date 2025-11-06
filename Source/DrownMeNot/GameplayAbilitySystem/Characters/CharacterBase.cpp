@@ -71,7 +71,7 @@ void ACharacterBase::BeginPlay()
                 m_AudioStopTimerHandle,
                 SpawnAudioComponent,
                 &UAudioComponent::Stop,
-                3, // duration (seconds)
+                2, // duration (seconds)
                 false // should not loop
             );
         }
