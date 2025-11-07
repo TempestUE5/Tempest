@@ -10,6 +10,6 @@ public class TempestTarget : TargetRules
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 
-		ExtraModuleNames.AddRange( new string[] { "DrownMeNot", "Tempest" } );
+		ExtraModuleNames.AddRange( new string[] { "Tempest" } );
 	}
 }

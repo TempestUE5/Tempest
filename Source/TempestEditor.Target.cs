@@ -10,6 +10,6 @@ public class TempestEditorTarget : TargetRules
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 
-		ExtraModuleNames.AddRange( new string[] { "DrownMeNot", "Tempest"} );
+		ExtraModuleNames.AddRange( new string[] { "Tempest"} );
 	}
 }

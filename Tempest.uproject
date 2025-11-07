@@ -12,15 +12,6 @@
 				"Engine",
 				"GameplayAbilities"
 			]
-		},
-		{
-			"Name": "DrownMeNot",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine",
-				"GameplayAbilities"
-			]
 		}
 	],
 	"Plugins": [
