@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class DROWNMENOT_API UBasicAttributeSet : public UAttributeSet
+class TEMPEST_API UBasicAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 

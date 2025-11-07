@@ -16,7 +16,7 @@ struct HurricaneTrajectoryData
 };
 
 UCLASS()
-class DROWNMENOT_API AHurricane : public AActor
+class TEMPEST_API AHurricane : public AActor
 {
 	GENERATED_BODY()
 	

@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DrownMeNot/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
+#include "Tempest/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
-#include "DrownMeNot/GameplayAbilitySystem/Characters/CharacterBase.h"
+#include "Tempest/GameplayAbilitySystem/Characters/CharacterBase.h"
 
 UBasicAttributeSet::UBasicAttributeSet()
 	: Health(100.f)

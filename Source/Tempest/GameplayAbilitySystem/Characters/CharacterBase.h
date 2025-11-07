@@ -13,7 +13,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathDelegate);
 
 UCLASS()
-class DROWNMENOT_API ACharacterBase : public ACharacter, public IAbilitySystemInterface
+class TEMPEST_API ACharacterBase : public ACharacter, public IAbilitySystemInterface
 {
     GENERATED_BODY()
 

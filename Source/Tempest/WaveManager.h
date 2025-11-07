@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "DrownMeNot/GameplayAbilitySystem/Characters/CharacterBase.h"
+#include "Tempest/GameplayAbilitySystem/Characters/CharacterBase.h"
 #include "Containers/Array.h"
 #include "Delegates/DelegateCombinations.h"
 #include "WaveManager.generated.h"
@@ -29,7 +29,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 );
 
 UCLASS()
-class DROWNMENOT_API AWaveManager : public AActor
+class TEMPEST_API AWaveManager : public AActor
 {
 	GENERATED_BODY()
 	

@@ -3,13 +3,13 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class DrownMeNotTarget : TargetRules
+public class TempestTarget : TargetRules
 {
-	public DrownMeNotTarget(TargetInfo Target) : base(Target)
+	public TempestTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
 
-		ExtraModuleNames.AddRange( new string[] { "DrownMeNot" } );
+		ExtraModuleNames.AddRange( new string[] { "DrownMeNot", "Tempest" } );
 	}
 }

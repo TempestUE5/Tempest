@@ -9,9 +9,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 
-#include "DrownMeNot/EnhancedInputAbilitySystem.h"
+#include "Tempest/EnhancedInputAbilitySystem.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "DrownMeNot/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
+#include "Tempest/GameplayAbilitySystem/AttributeSets/BasicAttributeSet.h"
 
 // Sets default values
 ACharacterBase::ACharacterBase()
