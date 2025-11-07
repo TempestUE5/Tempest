@@ -2,6 +2,8 @@
 
 [DEMO VIDEO](https://youtu.be/u4kn-k1czP4)
 
+![thumbnail gif](.github/images/Tempest-ThumbnailGIF.compressed.gif)
+
 ## Overview
 
 Tempest is a game developed by [Daniel Gerhardt](https://github.com/danieljgerhardt) and [Amy Liu](https://github.com/mialana). It was created in UE5 in a little under a month, and features usage of the Unreal Gameplay Ability System and Niagara Particle Simulation to build game systems and mechanics.
